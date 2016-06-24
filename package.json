@@ -1,6 +1,6 @@
 {
   "name": "strictly",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Never forget to add \"use strict\" again.",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "chalk": "^1.1.3",
+    "glob": "^7.0.5",
     "line-by-line": "^0.1.4"
   }
 }
