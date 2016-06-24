@@ -1,12 +1,14 @@
 {
   "name": "strictly",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Never forget to add \"use strict\" again.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {"github": "https://github.com/apizzimenti/strictly.git"},
+  "repository": {
+    "github": "https://github.com/apizzimenti/strictly.git"
+  },
   "keywords": [
     "strictly",
     "npm",
@@ -16,7 +18,8 @@
   "author": "Anthony Pizzimenti",
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^1.0.1"
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0"
   },
   "dependencies": {
     "chalk": "^1.1.3",
