@@ -1,11 +1,12 @@
 {
   "name": "strictly",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Never forget to add \"use strict\" again.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {"github": "https://github.com/apizzimenti/strictly.git"},
   "keywords": [
     "strictly",
     "npm",
