@@ -11,11 +11,10 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		
 		strictly: {
-			config: {
-				files: [
-					"test/*.js"
-				]
-			}
+			config: {},
+			files: [
+				"test/**/*.js"
+			]
 		},
 
 		jshint: {
