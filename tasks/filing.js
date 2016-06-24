@@ -27,8 +27,9 @@ function checker (grunt, fileName, done, cwd, filesChecked, numFiles, prefLines)
 		checkedLines = 0,
 		contains = false;
 
+	filesChecked = filesChecked + 1;
+
 	fs.stat(path, function (e, s) {
-		filesChecked++;
 
 		if (e) {
 			_checkError(grunt, fileName, filesChecked, numFiles, done);
@@ -37,6 +38,8 @@ function checker (grunt, fileName, done, cwd, filesChecked, numFiles, prefLines)
 		}
 
 	});
+
+	return filesChecked;
 }
 
 /**

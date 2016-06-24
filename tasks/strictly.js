@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 			checked = 0;
 
 		paths.forEach(function (p) {
-			c.checker(grunt, p, done, cwd, checked, num, lines);
+			checked = c.checker(grunt, p, done, cwd, checked, num, lines);
 		});
 	});
 };
