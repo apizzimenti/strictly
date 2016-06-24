@@ -4,7 +4,8 @@
 
 var chalk = require("chalk"),
 	fs = require("fs"),
-	lbl = require("line-by-line");
+	lbl = require("line-by-line"),
+	glob = require("glob");
 
 /**
  * @author Anthony Pizzimenti
@@ -118,13 +119,47 @@ function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesCheck
 			});
 		} else {
 			grunt.log.writeln(writing + "file is already in strict mode");
-			done(true);
+
+			if (filesChecked === numFiles) {
+				done(true);
+			}
 		}
 	});
+}
+
+/**
+ * @author Anthony Pizzimenti
+ *
+ * @desc Globs files.
+ *
+ * @param files {string | string[]} List of files to be searched or globbed.
+ *
+ * @returns {Array} Array of matching files.
+ */
+
+function getGlob (files) {
+
+	var concatFiles = [];
+
+	if (Array.isArray(files)) {
+		files.forEach(function (file) {
+			var matches = glob.sync(file);
+
+			matches.forEach(function (match) {
+				concatFiles.push(match);
+			})
+		});
+
+		return concatFiles;
+	} else {
+		concatFiles.push(glob.sync(files));
+		return concatFiles;
+	}
 }
 
 module.exports = {
 	checker: checker,
 	_check_Error: _checkError,
-	_check_Lines: _checkLines
+	_check_Lines: _checkLines,
+	getGlob: getGlob
 };
