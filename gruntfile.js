@@ -13,9 +13,7 @@ module.exports = function (grunt) {
 		strictly: {
 			config: {
 				files: [
-					"test/testjs.js",
-					"test/test2.js",
-					"test/test3.js"
+					"test/*.js"
 				]
 			}
 		},
