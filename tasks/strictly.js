@@ -11,8 +11,8 @@ module.exports = function (grunt) {
 	var name = "strictly",
 		desc = "Checks to see if \"use strict\" is within the file; if not, it's prepended to the beginning of the file";
 	
-	grunt.registerTask("strictly", "desc", function () {
-
+	grunt.registerTask(name, desc, function () {
+		
 		var done = this.async();
 
 		grunt.config.requires("strictly.config.files");
@@ -20,23 +20,31 @@ module.exports = function (grunt) {
 		var files = grunt.config("strictly.config.files"),
 			cwd = grunt.config("strictly.config.cwd") || process.cwd(),
 			lines = grunt.config("strictly.config.liens") || 10,
-			paths = Array.isArray(files) ? files : [files];
+			paths = Array.isArray(files) ? files : [files],
+			num = paths.length;
 
 		function checker (p) {
 
 			var a = cwd + "/" + p,
 				line,
 				i = 0,
-				writing = "Writing use strict to " + chalk.bgGreen.white(p) + " ",
+				n = 0,
+				writing = "Writing use strict to " + chalk.bgGreen.white(p) + " → ",
 				contents,
 				strict = "\"use strict\";\n",
 				contains = false;
 
 			fs.stat(a, function (e, s) {
+				n++;
 
 				if (e) {
-					grunt.log.writeln(writing + chalk.bgRed.white(p) + " doesn't exist");
-					return null;
+
+					if (n !== num) {
+						grunt.log.writeln(writing + chalk.bgRed.white(p) + " doesn't exist");
+						return null;
+					} else {
+						done();
+					}
 				} else {
 
 					line = new lbl(a);
@@ -60,6 +68,10 @@ module.exports = function (grunt) {
 							grunt.file.write(a, strict + contents);
 							grunt.log.write(chalk.green(writing + "done!\n"));
 						}
+
+						if (n === done) {
+							done();
+						}
 					});
 
 				}
@@ -67,6 +79,5 @@ module.exports = function (grunt) {
 		}
 
 		paths.forEach(checker);
-
 	});
 };
