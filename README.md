@@ -38,10 +38,6 @@ into your Grunt workflow to make sure that all your files are in strict mode so 
 
 If you don't specify `cwd`, `strictly` will look for files starting wherever your gruntfile is. If you want to change the
 directory, (e.g. `app/src/`), it's much less strain to type out all the file names.
-    
-        
-
-
 
 #### usage
 
