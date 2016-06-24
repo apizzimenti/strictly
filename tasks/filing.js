@@ -6,43 +6,94 @@ var chalk = require("chalk"),
 	fs = require("fs"),
 	lbl = require("line-by-line");
 
-function checker (grunt, p, done, cwd, checked, numFiles, lines) {
+/**
+ * @author Anthony Pizzimenti
+ *
+ * @desc Checks to see if a file exists and calls the necessary functions based on results.
+ *
+ * @param grunt {object} Current grunt object.
+ * @param fileName {string} Filename.
+ * @param done {function} Grunt's async call; when the functions are done, call done().
+ * @param cwd {string} Current working directory.
+ * @param filesChecked {number} Counter; the number of files that have been checked.
+ * @param numFiles {number} Total number of files.
+ * @param prefLines {number} Preferred number of lines to check.
+ */
 
-	var a = cwd + "/" + p,
-		i = 0,
+function checker (grunt, fileName, done, cwd, filesChecked, numFiles, prefLines) {
+
+	var path = cwd + "/" + fileName,
+		checkedLines = 0,
 		contains = false;
 
-	fs.stat(a, function (e, s) {
-		checked++;
+	fs.stat(path, function (e, s) {
+		filesChecked++;
 
 		if (e) {
-			_check_Error(grunt, checked, numFiles, done);
+			_checkError(grunt, fileName, filesChecked, numFiles, done);
 		} else {
-			_check_Lines(grunt, a, lines, checked, numFiles, done, contains);
+			_checkLines(grunt, path, fileName, checkedLines, prefLines, filesChecked, numFiles, done, contains);
 		}
 
 	});
 }
 
-function _check_Error (grunt, checked, numFiles, done, writing) {
-	if (checked !== numFiles) {
-		grunt.log.writeln(writing + chalk.bgRed.white(p) + " doesn't exist");
+/**
+ * @author Anthony Pizzimenti
+ *
+ * @desc Runs if the specified file doesn't exist.
+ *
+ * @param grunt {object} Current grunt object.
+ * @param fileName {string} Filename.
+ * @param filesChecked {number} The number of files checked.
+ * @param numFiles {number} The total number of files.
+ * @param done {function} Grunt's async call; when everything is done executing, done() is called.
+ *
+ * @returns {null}
+ * @private
+ */
+
+function _checkError (grunt, fileName, filesChecked, numFiles, done) {
+
+	var writing = "Writing use strict to " + chalk.bgGreen.white(fileName) + " → ";
+
+	if (filesChecked !== numFiles) {
+		grunt.log.writeln(writing + chalk.bgRed.white(fileName) + " doesn't exist");
 		return null;
 	} else {
-		grunt.log.writeln(writing + chalk.bgRed.white(p) + " doesn't exist");
+		grunt.log.writeln(writing + chalk.bgRed.white(fileName) + " doesn't exist");
 		done(true);
 	}
 }
 
-function _check_Lines (grunt, path, lines, checked, numFiles, done, contains) {
+/**
+ * @author Anthony Pizzimenti
+ *
+ * @desc Runs if the file exists; checks to see if "use strict" is already in the first prefLines || 10 lines of the
+ * file, then either moves to the next file or terminates the task.
+ *
+ * @param grunt {object} Current grunt object.
+ * @param path {string} Filepath.
+ * @param fileName {string} Filename.
+ * @param checkedLines {number} Number of lines checked on *this* file.
+ * @param prefLines {number} Preferred number of lines to be checked.
+ * @param filesChecked {number} Number of files checked.
+ * @param numFiles {number} Total number of files.
+ * @param done {function} Grunt's async call; when everything is done executing, done() is called.
+ * @param contains {boolean} Does this file contain "use strict"?
+ *
+ * @private
+ */
+
+function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesChecked, numFiles, done, contains) {
 
 	var line = new lbl(path),
-		writing = "Writing use strict to " + chalk.bgGreen.white(p) + " → ",
+		writing = "Writing use strict to " + chalk.bgGreen.white(fileName) + " → ",
 		strict = "\"use strict\";\n";
 
 	line.on("line", function (l) {
 
-		if (i !== lines) {
+		if (checkedLines !== prefLines) {
 			if (l.includes("use strict")) {
 				contains = true;
 				line.end()
@@ -51,7 +102,7 @@ function _check_Lines (grunt, path, lines, checked, numFiles, done, contains) {
 			line.end();
 		}
 
-		i++;
+		checkedLines++;
 
 	}).on("end", function () {
 
@@ -61,7 +112,7 @@ function _check_Lines (grunt, path, lines, checked, numFiles, done, contains) {
 			fs.writeFile(path, strict + contents, function (e) {
 				grunt.log.writeln(writing + chalk.green("done!"));
 
-				if (checked === numFiles) {
+				if (filesChecked === numFiles) {
 					done(true);
 				}
 			});
@@ -74,6 +125,6 @@ function _check_Lines (grunt, path, lines, checked, numFiles, done, contains) {
 
 module.exports = {
 	checker: checker,
-	_check_Error: _check_Error,
-	_check_Lines: _check_Lines
+	_check_Error: _checkError,
+	_check_Lines: _checkLines
 };
