@@ -19,7 +19,7 @@ into your Grunt workflow to make sure that all your files are in strict mode so 
         }
     });
 
-`files`: A string filepath or an array of filepaths to check.
+`files`: A string filepath or an array of filepaths to check. **File globbing is supported.**
 
 `lines` [optional]: The preferred number of lines from the top of the file to check for `"use strict"`.
 
@@ -53,7 +53,15 @@ directory, (e.g. `app/src/`), it's much less strain to type out all the file nam
         grunt.loadNpmTasks("strictly");
         
         grunt.initConfig({
-            // see the options section above
+            strictly: {
+                config: {
+                    lines: 10,
+                    cwd: "app/src"
+                },
+                files: [
+                    "app/src/**/*.js"
+                ]
+            }
         });
             
         grunt.registerTask("strictly", ["strictly"]);
@@ -69,5 +77,7 @@ directory, (e.g. `app/src/`), it's much less strain to type out all the file nam
             "clean"
         }
     }
+    
+For an example Gruntfile, you can check this repo's Gruntfile as well.
          
         
