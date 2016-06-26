@@ -17,13 +17,14 @@ module.exports = function (grunt) {
 
 		var files = grunt.config("strictly.files"),
 			cwd = grunt.config("strictly.config.cwd") || process.cwd(),
-			lines = grunt.config("strictly.config.liens") || 10,
-			paths = c.getGlob(files),
+			lines = grunt.config("strictly.config.lines") || 10,
+			type = grunt.config("strictly.config.function") ? true : false,
+			paths = c.getGlob(c.mapPath(cwd, files)),
 			num = paths.length,
 			checked = 0;
 
 		paths.forEach(function (p) {
-			checked = c.checker(grunt, p, done, cwd, checked, num, lines);
+			checked = c.checker(grunt, p, done, checked, num, lines, type);
 		});
 	});
 };
