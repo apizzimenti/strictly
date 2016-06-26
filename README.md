@@ -15,11 +15,14 @@ into your Grunt workflow to make sure that all your files are in strict mode so 
         strictly: {
             config: {
                 // options go here
-            }
+            },
+            files: [...]
         }
     });
 
 `files`: A string filepath or an array of filepaths to check. **File globbing is supported.**
+
+`type` [optional]: Whether to use the IIFE function form `(function () {"use strict";})();` or string form `"use strict"`.
 
 `lines` [optional]: The preferred number of lines from the top of the file to check for `"use strict"`.
 
