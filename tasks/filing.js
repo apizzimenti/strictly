@@ -4,6 +4,7 @@
 
 var chalk = require("chalk"),
 	fs = require("fs"),
+	p = require("path"),
 	lbl = require("line-by-line"),
 	glob = require("glob");
 
@@ -13,17 +14,19 @@ var chalk = require("chalk"),
  * @desc Checks to see if a file exists and calls the necessary functions based on results.
  *
  * @param grunt {object} Current grunt object.
- * @param fileName {string} Filename.
+ * @param path {string} Resolved filepath (either through absolute paths or globbing).
  * @param done {function} Grunt's async call; when the functions are done, call done().
- * @param cwd {string} Current working directory.
  * @param filesChecked {number} Counter; the number of files that have been checked.
  * @param numFiles {number} Total number of files.
  * @param prefLines {number} Preferred number of lines to check.
+ * @param type {boolean} Function or string type?
+ *
+ * @returns {number} Number of files checked.
  */
 
-function checker (grunt, fileName, done, cwd, filesChecked, numFiles, prefLines) {
+function checker (grunt, path, done, filesChecked, numFiles, prefLines, type) {
 
-	var path = cwd + "/" + fileName,
+	var name = p.basename(path),
 		checkedLines = 0,
 		contains = false;
 
@@ -32,9 +35,9 @@ function checker (grunt, fileName, done, cwd, filesChecked, numFiles, prefLines)
 	fs.stat(path, function (e, s) {
 
 		if (e) {
-			_checkError(grunt, fileName, filesChecked, numFiles, done);
+			_checkError(grunt, name, filesChecked, numFiles, done);
 		} else {
-			_checkLines(grunt, path, fileName, checkedLines, prefLines, filesChecked, numFiles, done, contains);
+			_checkLines(grunt, path, name, checkedLines, prefLines, filesChecked, numFiles, done, contains);
 		}
 
 	});
@@ -93,7 +96,7 @@ function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesCheck
 
 	var line = new lbl(path),
 		writing = "Writing use strict to " + chalk.bgGreen.white(fileName) + " → ",
-		strict = "\"use strict\";\n";
+		strict = "use strict\";\n";
 
 	line.on("line", function (l) {
 
@@ -155,14 +158,23 @@ function getGlob (files) {
 
 		return concatFiles;
 	} else {
-		concatFiles.push(glob.sync(files));
+		concatFiles.concat(glob.sync(files));
 		return concatFiles;
 	}
+}
+
+
+function mapPath (cwd, files) {
+
+	return files.map(function (elem) {
+		return p.join(cwd, elem);
+	});
 }
 
 module.exports = {
 	checker: checker,
 	_check_Error: _checkError,
 	_check_Lines: _checkLines,
-	getGlob: getGlob
+	getGlob: getGlob,
+	mapPath: mapPath
 };
