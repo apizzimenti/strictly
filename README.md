@@ -22,7 +22,7 @@ into your Grunt workflow to make sure that all your files are in strict mode so 
 
 `files`: A string filepath or an array of filepaths to check. **File globbing is supported.**
 
-`type` [optional]: Whether to use the IIFE function form `(function () {"use strict";})();` or string form `"use strict"`.
+`function` [optional]: Whether to use the IIFE function form `(function () {"use strict";})();` or string form `"use strict"`.
 
 `lines` [optional]: The preferred number of lines from the top of the file to check for `"use strict"`.
 
@@ -56,6 +56,7 @@ directory, (e.g. `app/src/`), it's much less strain to type out all the file nam
                 config: {
                     lines: 10,
                     cwd: "app/src"
+                    function: true
                 },
                 files: [
                     "app/src/**/*.js"
