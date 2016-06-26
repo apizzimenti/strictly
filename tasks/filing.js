@@ -37,7 +37,7 @@ function checker (grunt, path, done, filesChecked, numFiles, prefLines, type) {
 		if (e) {
 			_checkError(grunt, name, filesChecked, numFiles, done);
 		} else {
-			_checkLines(grunt, path, name, checkedLines, prefLines, filesChecked, numFiles, done, contains);
+			_checkLines(grunt, path, name, checkedLines, prefLines, filesChecked, numFiles, done, contains, type);
 		}
 
 	});
@@ -88,20 +88,23 @@ function _checkError (grunt, fileName, filesChecked, numFiles, done) {
  * @param numFiles {number} Total number of files.
  * @param done {function} Grunt's async call; when everything is done executing, done() is called.
  * @param contains {boolean} Does this file contain "use strict"?
+ * @param type {boolean} Function or string form of use strict?
  *
  * @private
  */
 
-function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesChecked, numFiles, done, contains) {
+function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesChecked, numFiles, done, contains, type) {
 
 	var line = new lbl(path),
 		writing = "Writing use strict to " + chalk.bgGreen.white(fileName) + " → ",
-		strict = "use strict\";\n";
+		func = "(function () {\"use strict\";})();\n",
+		str = "\"use strict\";\n",
+		strict = type ? func : str;
 
 	line.on("line", function (l) {
 
 		if (checkedLines !== prefLines) {
-			if (l.includes("use strict")) {
+			if (l.includes(str) || l.includes(func)) {
 				contains = true;
 				line.end()
 			}
@@ -119,14 +122,14 @@ function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesCheck
 			fs.writeFile(path, strict + contents, function (e) {
 				grunt.log.writeln(writing + chalk.green("done!"));
 
-				if (filesChecked === numFiles) {
+				if (filesChecked >= numFiles) {
 					done(true);
 				}
 			});
 		} else {
 			grunt.log.writeln(writing + "file is already in strict mode");
 
-			if (filesChecked === numFiles) {
+			if (filesChecked >= numFiles) {
 				done(true);
 			}
 		}
