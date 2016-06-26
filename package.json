@@ -1,6 +1,6 @@
 {
   "name": "strictly",
-  "version": "1.1.04",
+  "version": "1.1.05",
   "description": "Never forget to add \"use strict\" again.",
   "main": "index.js",
   "scripts": {

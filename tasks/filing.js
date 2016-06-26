@@ -104,7 +104,7 @@ function _checkLines (grunt, path, fileName, checkedLines, prefLines, filesCheck
 	line.on("line", function (l) {
 
 		if (checkedLines !== prefLines) {
-			if (l.includes(str) || l.includes(func)) {
+			if (l.includes("use strict") || l.includes(func)) {
 				contains = true;
 				line.end()
 			}
