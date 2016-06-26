@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Created by apizzimenti on 6/23/16.
  */
@@ -11,21 +12,23 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		
 		strictly: {
-			config: {},
+			config: {
+				cwd: "test/"
+			},
 			files: [
-				"test/**/*.js"
+				"**/*.js"
 			]
 		},
 
 		jshint: {
-			files: {
-				src: ["test/testjs.js"]
-			}
+			all: ["test/testjs.js"]
 		}
 	});
 
 	grunt.registerTask("default", [
-		"strictly",
-		"jshint"
+		"jshint",
+		"strictly"
 	]);
+
+	grunt.registerTask("jshint", ["jshint"]);
 };
