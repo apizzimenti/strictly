@@ -62,9 +62,8 @@ directory, (e.g. `app/src/`), it's much less strain to type out all the file nam
                 ]
             }
         });
-            
-        grunt.registerTask("strictly", ["strictly"]);
         
+        // just run with "grunt strictly",
         // or add it to your default build task
         
         grunt.registerTask("default", [
