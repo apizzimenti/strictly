@@ -11,11 +11,14 @@ module.exports = function (grunt) {
 
 		jshint: {
 			files: {
-				src: ["test/testjs.js"]
+				src: ["test/**/*.js"]
 			}
 		},
 
 		strictly: {
+			config: {
+				function: true
+			},
 			files: ["test/**/*.js"]
 		}
 	});
