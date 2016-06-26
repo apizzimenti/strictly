@@ -13,7 +13,7 @@ into your Grunt workflow to make sure that all your files are in strict mode so 
 
     grunt.initConfig({
         strictly: {
-            config: {
+            options: {
                 // options go here
             },
             files: [...]
@@ -53,7 +53,7 @@ directory, (e.g. `app/src/`), it's much less strain to type out all the file nam
         
         grunt.initConfig({
             strictly: {
-                config: {
+                options: {
                     lines: 10,
                     cwd: "app/src"
                     function: true

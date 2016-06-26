@@ -16,9 +16,9 @@ module.exports = function (grunt) {
 		grunt.config.requires("strictly.files");
 
 		var files = grunt.config("strictly.files"),
-			cwd = grunt.config("strictly.config.cwd") || process.cwd(),
-			lines = grunt.config("strictly.config.lines") || 10,
-			type = grunt.config("strictly.config.function") ? true : false,
+			cwd = grunt.config("strictly.options.cwd") || process.cwd(),
+			lines = grunt.config("strictly.options.lines") || 10,
+			type = grunt.config("strictly.options.function"),
 			paths = c.getGlob(c.mapPath(cwd, files)),
 			num = paths.length,
 			checked = 0;

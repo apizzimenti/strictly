@@ -64,7 +64,7 @@ function _checkError (grunt, fileName, filesChecked, numFiles, done) {
 
 	var writing = "Writing use strict to " + chalk.bgGreen.white(fileName) + " → ";
 
-	if (filesChecked !== numFiles) {
+	if (filesChecked >= numFiles) {
 		grunt.log.writeln(writing + chalk.bgRed.white(fileName) + " doesn't exist");
 		return null;
 	} else {

@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 		},
 
 		strictly: {
-			config: {
+			options: {
 				function: true
 			},
 			files: ["test/**/*.js"]
