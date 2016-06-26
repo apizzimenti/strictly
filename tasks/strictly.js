@@ -2,17 +2,17 @@
  * Created by apizzimenti on 6/22/16.
  */
 
-var grunt = require("grunt"),
-	c = require("./filing");
+var c = require("./filing");
 
 module.exports = function (grunt) {
 	var name = "strictly",
-		desc = "Checks to see if file(s) are in strict mode.";
+		desc = "Checks to see if file(s) are in strict mode.",
+		done;
 	
 	grunt.registerTask(name, desc, function () {
-		
-		var done = this.async();
 
+		done = this.async();
+		
 		grunt.config.requires("strictly.files");
 
 		var files = grunt.config("strictly.files"),
