@@ -1,10 +1,10 @@
 {
   "name": "strictly",
-  "version": "1.1.08",
+  "version": "1.1.11",
   "description": "Are your files in strict mode?",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "github": "https://github.com/apizzimenti/strictly.git"
@@ -19,7 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0"
+    "grunt-contrib-jshint": "^1.0.0",
+    "mocha": "^2.5.3"
   },
   "dependencies": {
     "chalk": "^1.1.3",
