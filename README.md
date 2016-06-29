@@ -1,6 +1,15 @@
 ### strictly
 -----
 
+[![NPM](https://nodei.co/npm/strictly.png?compact=true)](https://nodei.co/npm/strictly/)
+
+[![npm](https://img.shields.io/npm/l/strictly.svg?style=flat-square)]()
+[![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)]()
+[![node](https://img.shields.io/node/v/gh-badges.svg?style=flat-square)]()
+[![Build status](https://img.shields.io/travis/apizzimenti/strictly.svg?style=flat-square)](https://travis-ci.org/apizzimenti/strictly)
+[![npm](https://img.shields.io/npm/dt/strictly.svg?style=flat-square)]()
+[![GitHub issues](https://img.shields.io/github/issues-raw/apizzimenti/strictly.svg?style=flat-square)]()
+
 Simply, `strictly` is a tool that writes `"use strict"` to your .js files so you don't forget. It can be easily worked
 into your Grunt workflow to make sure that all your files are in strict mode so JSHint doesn't get mad.
 
