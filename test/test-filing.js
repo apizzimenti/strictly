@@ -10,7 +10,7 @@ describe("filing", () => {
 	var test_path = "./test-files/**/*.js",
 		files;
 
-	describe("#glob()", () => {
+	describe("glob()", () => {
 		it("returns an array of files", () => {
 			files = filing.getGlob(test_path);
 			assert(Array.isArray(files));
